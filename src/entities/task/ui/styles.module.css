@@ -23,3 +23,16 @@
 .done {
     color: #9aa5b1;
 }
+
+.features {
+    display: flex;
+    gap: 12px;
+}
+
+.buttonStar {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #f2c94c;
+    cursor: pointer;
+}

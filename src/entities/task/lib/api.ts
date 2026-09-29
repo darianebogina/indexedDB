@@ -12,7 +12,7 @@ const promisify = <T>(request: IDBRequest<T>) => {
 };
 
 const openDB = () => {
-    const openRequest = indexedDB.open("tasks", 1);
+    const openRequest = indexedDB.open("tasks", 2);
     return new Promise<IDBDatabase>((resolve, reject) => {
 
         openRequest.onsuccess = () => {
@@ -27,10 +27,22 @@ const openDB = () => {
             reject(openRequest.error);
         };
 
-        openRequest.onupgradeneeded = () => {
+        openRequest.onupgradeneeded = (event) => {
             const db = openRequest.result;
-            if (!db.objectStoreNames.contains("tasks")) {
+            const transaction = openRequest.transaction!;
+
+            if (event.oldVersion < 1) {
                 db.createObjectStore("tasks", { keyPath: "id" });
+            }
+
+            if (event.oldVersion < 2) {
+                const store = transaction.objectStore("tasks");
+                const request = store.getAll();
+                request.onsuccess = () => {
+                    request.result.forEach(task => {
+                        store.put({ ...task, important: false });
+                    });
+                };
             }
         }
     })

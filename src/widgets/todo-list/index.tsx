@@ -9,16 +9,16 @@ type TodoListProps = {
 }
 
 export const TodoList = ({filter}: TodoListProps) => {
-    const {tasks, add, toggle} = useTasks();
+    const {tasks, add, toggle, toggleImportant} = useTasks();
 
     const visibleTasks = filterTasks(tasks, filter);
 
     return (
         <>
-            <AddTask onAdd={add} />
+            <AddTask onAdd={add}/>
             <ul className={styles.list}>
                 {visibleTasks.map(task =>
-                    <TaskItem key={task.id} task={task} onToggle={toggle} />
+                    <TaskItem key={task.id} task={task} onToggle={toggle} onToggleImportant={toggleImportant}/>
                 )}
             </ul>
         </>
