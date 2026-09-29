@@ -12,7 +12,7 @@ const promisify = <T>(request: IDBRequest<T>) => {
 };
 
 const openDB = () => {
-    const openRequest = indexedDB.open("tasks", 2);
+    const openRequest = indexedDB.open("tasks", 1);
     return new Promise<IDBDatabase>((resolve, reject) => {
 
         openRequest.onsuccess = () => {

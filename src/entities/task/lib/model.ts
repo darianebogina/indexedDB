@@ -19,7 +19,7 @@ export const useTasks = () => {
             id: Date.now(),
             text: text,
             completed: false,
-            important: false,
+            // important: false,
         }
 
         await addTask(newTask);
@@ -36,15 +36,15 @@ export const useTasks = () => {
         setTasks(prev => prev.map(task => task.id === id ? updated : task));
     }
 
-    const toggleImportant = async (id: number) => {
-        const task = tasks.find(task => task.id === id);
-        if (!task) return;
+    // const toggleImportant = async (id: number) => {
+    //     const task = tasks.find(task => task.id === id);
+    //     if (!task) return;
+    //
+    //     const updated = {...task, important: !task.important};
+    //     await updateTask(updated);
+    //
+    //     setTasks(prev => prev.map(task => task.id === id ? updated : task));
+    // }
 
-        const updated = {...task, important: !task.important};
-        await updateTask(updated);
-
-        setTasks(prev => prev.map(task => task.id === id ? updated : task));
-    }
-
-    return {tasks, add, toggle, toggleImportant};
+    return {tasks, add, toggle, /*toggleImportant*/};
 };

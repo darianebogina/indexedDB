@@ -18,7 +18,7 @@ export const TodoList = ({filter}: TodoListProps) => {
             <AddTask onAdd={add}/>
             <ul className={styles.list}>
                 {visibleTasks.map(task =>
-                    <TaskItem key={task.id} task={task} onToggle={toggle} onToggleImportant={toggleImportant}/>
+                    <TaskItem key={task.id} task={task} onToggle={toggle} /*onToggleImportant={toggleImportant}*//>
                 )}
             </ul>
         </>

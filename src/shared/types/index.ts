@@ -4,5 +4,5 @@ export type TodoTask = {
     id: number;
     text: string;
     completed: boolean;
-    important: boolean;
+    // important: boolean;
 }
