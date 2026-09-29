@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {type SubmitEvent, useState} from "react";
 import styles from "./styles.module.css";
 
 type AddTaskProps = {
@@ -8,7 +8,9 @@ type AddTaskProps = {
 export const AddTask = ({onAdd}: AddTaskProps) => {
     const [value, setValue] = useState('');
 
-    const handleAdd = async () => {
+    const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         const text = value.trim();
         if (!text) return;
 
@@ -17,9 +19,9 @@ export const AddTask = ({onAdd}: AddTaskProps) => {
     }
 
     return (
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
             <input className={styles.input} value={value} onChange={e => setValue(e.target.value)}/>
-            <button className={styles.button} onClick={handleAdd}>Добавить</button>
-        </div>
+            <button className={styles.button}>Добавить</button>
+        </form>
     )
 };

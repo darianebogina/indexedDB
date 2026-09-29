@@ -12,7 +12,7 @@ const promisify = <T>(request: IDBRequest<T>) => {
 };
 
 const openDB = () => {
-    const openRequest = indexedDB.open("tasks", 4);
+    const openRequest = indexedDB.open("tasks", 1);
     return new Promise<IDBDatabase>((resolve, reject) => {
 
         openRequest.onsuccess = () => {
@@ -36,31 +36,24 @@ const openDB = () => {
     })
 };
 
-
-
-let dbPromise: Promise<IDBDatabase> | null = null;
-
-const getDB = () => {
-    dbPromise ??= openDB();
-    return dbPromise;
-};
+const dbPromise = openDB();
 
 export const getAllTasks = async () => {
-    const db = await getDB();
+    const db = await dbPromise;
     const transaction = db.transaction("tasks", "readonly");
     const tasksStore = transaction.objectStore("tasks");
     return promisify<TodoTask[]>(tasksStore.getAll());
 };
 
 export const addTask = async (task: TodoTask) => {
-    const db = await getDB();
+    const db = await dbPromise;
     const transaction = db.transaction("tasks", "readwrite");
     const tasksStore = transaction.objectStore("tasks");
     return promisify(tasksStore.add(task));
 };
 
 export const updateTask = async (task: TodoTask) => {
-    const db = await getDB();
+    const db = await dbPromise;
     const transaction = db.transaction("tasks", "readwrite");
     const tasksStore = transaction.objectStore("tasks");
     return promisify(tasksStore.put(task));
