@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import styles from "./styles.module.css";
 import type {Filter} from "@/shared/types";
-import {options} from "./lib.ts";
+import {options} from "../lib.ts";
 
 type FilterListProps = {
     filter: Filter;

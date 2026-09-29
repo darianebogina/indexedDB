@@ -1,0 +1,25 @@
+.item {
+    padding: 10px 14px;
+    border: 1px solid #cbd2d9;
+    border-radius: 6px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: border-color 0.15s ease;
+}
+
+.item:hover {
+    border-color: #f2c94c;
+}
+
+.checkbox {
+    accent-color: #f2c94c;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.done {
+    color: #9aa5b1;
+}

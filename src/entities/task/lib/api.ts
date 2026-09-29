@@ -1,10 +1,6 @@
-export type TodoTask = {
-    id: number;
-    text: string;
-    completed: boolean;
-}
+import type {TodoTask} from "@/shared/types";
 
-export const promisify = <T>(request: IDBRequest<T>) => {
+const promisify = <T>(request: IDBRequest<T>) => {
     return new Promise<T>((resolve, reject) => {
         request.onsuccess = () => {
             resolve(request.result);
@@ -15,7 +11,7 @@ export const promisify = <T>(request: IDBRequest<T>) => {
     })
 };
 
-export const openDB = () => {
+const openDB = () => {
     const openRequest = indexedDB.open("tasks", 4);
     return new Promise<IDBDatabase>((resolve, reject) => {
 
@@ -40,19 +36,31 @@ export const openDB = () => {
     })
 };
 
-export const getAllTasks = (db: IDBDatabase) => {
-    const transaction = db.transaction("tasks", "readonly");
-    const tasksStore = transaction.objectStore("tasks");
-    return promisify(tasksStore.getAll());
+
+
+let dbPromise: Promise<IDBDatabase> | null = null;
+
+const getDB = () => {
+    dbPromise ??= openDB();
+    return dbPromise;
 };
 
-export const addTask = (db: IDBDatabase, task: TodoTask) => {
+export const getAllTasks = async () => {
+    const db = await getDB();
+    const transaction = db.transaction("tasks", "readonly");
+    const tasksStore = transaction.objectStore("tasks");
+    return promisify<TodoTask[]>(tasksStore.getAll());
+};
+
+export const addTask = async (task: TodoTask) => {
+    const db = await getDB();
     const transaction = db.transaction("tasks", "readwrite");
     const tasksStore = transaction.objectStore("tasks");
     return promisify(tasksStore.add(task));
 };
 
-export const updateTask = (db: IDBDatabase, task: TodoTask) => {
+export const updateTask = async (task: TodoTask) => {
+    const db = await getDB();
     const transaction = db.transaction("tasks", "readwrite");
     const tasksStore = transaction.objectStore("tasks");
     return promisify(tasksStore.put(task));
