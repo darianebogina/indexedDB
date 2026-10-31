@@ -6,3 +6,22 @@
     flex-direction: column;
     gap: 8px;
 }
+
+.toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.toolbar > form {
+    flex: 1;
+}
+
+.clear {
+    padding: 8px 16px;
+    border: 1px solid #cbd2d9;
+    border-radius: 6px;
+    background: transparent;
+    color: #1f2933;
+    cursor: pointer;
+}
